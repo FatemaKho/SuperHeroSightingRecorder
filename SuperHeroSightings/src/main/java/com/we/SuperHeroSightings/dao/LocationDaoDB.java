@@ -30,10 +30,9 @@ public class LocationDaoDB implements LocationDao {
     @Override
     public Location getLocationByID(int id) {
 
-
         try {
-            final String SELECT_LOCATION_BY_ID = "SELECT * FROM location WHERE locationId = ?";
-            return jdbc.queryForObject(SELECT_LOCATION_BY_ID, new Object[]{id}, new LocationMapper());
+            final String SELECT_LOCATION_BY_ID = "SELECT * FROM location WHERE locationPK = ?";
+            return jdbc.queryForObject(SELECT_LOCATION_BY_ID, new LocationMapper(), id);
         } catch(DataAccessException ex) {
             return null;
         }
@@ -43,15 +42,13 @@ public class LocationDaoDB implements LocationDao {
     @Override
     public List<Location> getAllLocations() {
 
-
         final String SELECT_ALL_LOCATIONS = "SELECT * FROM location";
         return jdbc.query(SELECT_ALL_LOCATIONS, new LocationMapper());
     }
 
-
     @Override
     public Location addLocation(Location location) {
-        final String INSERT_LOCATION = "INSERT INTO location(locationName, locationDesc, locationAddress, locationLatitude, locationLongitude) VALUES(?,?,?,?,?)";
+        final String INSERT_LOCATION = "INSERT INTO location(LocationName, Description, LocationAddress, Latitude, Longitude) VALUES(?,?,?,?,?)";
         jdbc.update(INSERT_LOCATION,
                 location.getName(),
                 location.getDescription(),
@@ -59,15 +56,11 @@ public class LocationDaoDB implements LocationDao {
                 location.getLatitude(),
                 location.getLongitude());
 
-
-// Retrieve the last inserted ID
-
-
+        // Retrieve the last inserted ID
         String selectLastIdQuery = "SELECT LAST_INSERT_ID()";
         int locationId = jdbc.queryForObject(selectLastIdQuery, Integer.class);
 
-
-// Set the game ID
+        // Set the location ID
         location.setId(locationId);
         return location;
     }
@@ -76,8 +69,7 @@ public class LocationDaoDB implements LocationDao {
     @Override
     public void updateLocation(Location location) {
 
-
-        final String UPDATE_LOCATION = "UPDATE location SET locationName = ?, locationDesc = ?, locationAddress = ?, locationLatitude = ?, locationLongitude = ? WHERE locationId = ?";
+        final String UPDATE_LOCATION = "UPDATE location SET LocationName = ?, Description = ?, LocationAddress = ?, Latitude = ?, Longitude = ? WHERE locationPK = ?";
         jdbc.update(UPDATE_LOCATION,
                 location.getName(),
                 location.getDescription(),
@@ -88,15 +80,15 @@ public class LocationDaoDB implements LocationDao {
     }
 
 
+
     @Override
+    @Transactional
     public void deleteLocationByID(int id) {
-        final String DELETE_LOCATION_BY_SIGHTING = "DELETE FROM sighting WHERE locationId = ?";
+        final String DELETE_LOCATION_BY_SIGHTING = "DELETE FROM sighting WHERE locationPK = ?";
         jdbc.update(DELETE_LOCATION_BY_SIGHTING, id);
 
-
-        final String DELETE_LOCATION = "DELETE FROM location WHERE locationId=?";
+        final String DELETE_LOCATION = "DELETE FROM location WHERE locationPK =?";
         jdbc.update(DELETE_LOCATION, id);
-
 
     }
 
@@ -104,12 +96,9 @@ public class LocationDaoDB implements LocationDao {
     @Override
     public List<Location> getLocationsByHero(Hero hero) {
 
-
-        final String SELECT_LOCATION_BY_HERO = "SELECT * FROM location INNER JOIN sighting ON " +
-                "sighting.locationPK = location.locationPK INNER JOIN " +
-                "hero ON hero.heroPK = sighting.heroPK WHERE hero.heroPK = ?";
+        final String SELECT_LOCATION_BY_HERO = "SELECT I.* FROM location I INNER JOIN sighting s ON " +
+                "s.locationPK = I.locationPK WHERE s.heroPK = ?";
         return jdbc.query(SELECT_LOCATION_BY_HERO, new LocationMapper(), hero.getId());
-
 
     }
 
