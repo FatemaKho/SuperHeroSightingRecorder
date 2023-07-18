@@ -27,42 +27,121 @@ public class SightingDaoDB implements SightingDao {
 
     @Override
     public Sighting getSightingByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String GET_SIGHTING_BY_ID = "SELECT * FROM Sighting WHERE SightingPK = ?";
+        try{
+            Sighting sighting = jdbc.queryForObject(GET_SIGHTING_BY_ID, new SightingMapper(), id);
+            sighting.setHero(getHeroForSighting(id));
+            sighting.setLocation(getLocationForSighting(id));
+            return sighting;
+        }catch(DataAccessException ex){
+            return null;
+        }
+    }
+
+    private Hero getHeroForSighting(int id){
+        final String SELECT_HERO_FOR_SIGHTING = "SELECT h.* FROM Hero h " +
+                "INNER JOIN Sighting s " +
+                "ON h.HeroPK = s.HeroPK " +
+                "WHERE s.SightingPK = ?";
+        try {
+            return jdbc.queryForObject(SELECT_HERO_FOR_SIGHTING, new HeroMapper(), id);
+        } catch(DataAccessException ex){
+            return null;
+        }
+    }
+
+    private Location getLocationForSighting(int id){
+        final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM Location l" +
+                "INNER JOIN Sighting s " +
+                "ON l.LocationPK = s.LocationPK " +
+                "WHERE s.SightingPK = ?";
+        try{
+            return jdbc.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationMapper(), id);
+        } catch(DataAccessException ex){
+            return null;
+        }
+    }
+
+    private void associateHerosAndLocations(List<Sighting> sightings){
+        for (Sighting sighting: sightings){
+            sighting.setHero(getHeroForSighting(sighting.getId()));
+            sighting.setLocation(getLocationForSighting(sighting.getId()));
+        }
     }
 
     @Override
     public List<Sighting> getAllSightings() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String SELECT_SIGHTING = "SELECT * FROM sighting";
+        List<Sighting> sightings = jdbc.query(SELECT_SIGHTING, new SightingMapper());
+        associateHerosAndLocations(sightings);
+        return sightings;
     }
 
     @Override
     public Sighting addSighting(Sighting sighting) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String INSERT_SIGHTING = "INSERT INTO sighting(sightingDate, description, heroPK, locationPK) "
+                + "VALUES(?,?,?,?)";
+        jdbc.update(INSERT_SIGHTING,
+                sighting.getDate(),
+                sighting.getDescription(),
+                sighting.getHero().getId(),
+                sighting.getLocation().getId());
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        sighting.setId(newId);
+        return sighting;
     }
 
     @Override
     public void updateSighting(Sighting sighting) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String UPDATE_COURSE = "UPDATE Sighting SET sightingDate = ?, description = ?, "
+                + "heroPK = ?, locationPk = ? WHERE SightingPK = ?";
+        jdbc.update(UPDATE_COURSE,
+                sighting.getDate(),
+                sighting.getDescription(),
+                sighting.getHero().getId(),
+                sighting.getLocation().getId(),
+                sighting.getId());
     }
 
     @Override
     public void deleteSightingByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String DELETE_SIGHTING = "DELETE FROM Sighting WHERE SightingPK = ?";
+        jdbc.update(DELETE_SIGHTING, id);
     }
 
     @Override
     public List<Sighting> getSightingsByDate(LocalDateTime date) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM sighting WHERE SightingDate = ?";
+        List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper(), date);
+        associateHerosAndLocations(sightings);
+        return sightings;
     }
 
     @Override
     public List<Sighting> getSightingsByLocation(Location location) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM sighting WHERE LocationPK = ?";
+        List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper(), location.getId());
+        associateHerosAndLocations(sightings);
+        return sightings;
     }
 
     @Override
     public List<Sighting> getSightingsByHero(Hero hero) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM sighting WHERE HeroPK = ?";
+        List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper(), hero.getId());
+        associateHerosAndLocations(sightings);
+        return sightings;
+    }
+
+    public class SightingMapper implements RowMapper<Sighting> {
+        @Override
+        public Sighting mapRow(ResultSet rs, int index) throws SQLException {
+            Sighting sighting = new Sighting();
+            sighting.setId(rs.getInt("SightingPK"));
+            sighting.setDescription(rs.getString("Description"));
+            sighting.setDate(rs.getTimestamp("sightingDate").toLocalDateTime());
+            return sighting;
+        }
     }
     
 
