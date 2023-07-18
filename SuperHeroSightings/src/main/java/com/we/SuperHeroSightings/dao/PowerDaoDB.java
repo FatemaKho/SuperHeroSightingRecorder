@@ -18,34 +18,70 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 public class PowerDaoDB implements PowerDao {
-    
+
     @Autowired
     JdbcTemplate jdbc;
 
+    final String GET_POWER_BY_ID = "SELECT * FROM power WHERE powerPK = ?";
+    final String GET_ALL_POWERS = "SELECT * FROM power";
+    final String INSERT_POWER= "INSERT INTO power (power, description) VALUES (?, ?)";
+    final String GET_INSERT_ID = "SELECT LAST_INSERT_ID()";
+    final String UPDATE_POWER = "UPDATE power SET power = ?, description = ? WHERE powerPK = ?";
+    final String UPDATE_HERO_POWERPK = "UPDATE hero SET powerPK = null WHERE powerPK = ?";
+    final String DELETE_POWER = "DELETE FROM power WHERE powerPK = ?";
+
+
     @Override
     public Power getPowerByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try{
+            return jdbc.queryForObject(GET_POWER_BY_ID, new PowerMapper(), id);
+        }catch(DataAccessException ex){
+            return null;
+        }
     }
 
     @Override
     public List<Power> getAllPowers() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return jdbc.query(GET_ALL_POWERS, new PowerMapper());
     }
 
     @Override
+    @Transactional
     public Power addPower(Power power) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        jdbc.update(INSERT_POWER,
+                power.getName(),
+                power.getDescription());
+        int newID = jdbc.queryForObject(GET_INSERT_ID, Integer.class);
+        power.setId(newID);
+        return power;
     }
 
     @Override
     public void updatePower(Power power) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        jdbc.update(UPDATE_POWER,
+                power.getName(),
+                power.getDescription(),
+                power.getId());
     }
 
     @Override
+    @Transactional
     public void deletePowerByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        jdbc.update(UPDATE_HERO_POWERPK, id);
+        jdbc.update(DELETE_POWER, id);
     }
-    
+
+    public static final class PowerMapper implements RowMapper<Power>{
+
+        @Override
+        public Power mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Power power = new Power();
+            power.setId(rs.getInt("powerPK"));
+            power.setName(rs.getString("power"));
+            power.setDescription(rs.getString("description"));
+
+            return power;
+        }
+    }
 
 }
