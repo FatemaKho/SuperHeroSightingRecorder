@@ -139,11 +139,4 @@ public class Organization {
         }
         return true;
     }
-
-    
-
-
-
-    
-    
 }

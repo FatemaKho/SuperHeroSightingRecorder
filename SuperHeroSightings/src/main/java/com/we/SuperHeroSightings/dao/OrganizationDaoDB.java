@@ -2,6 +2,7 @@
 package com.we.SuperHeroSightings.dao;
 
 
+import com.we.SuperHeroSightings.dao.Mappers.OrganizationMapper;
 import com.we.SuperHeroSightings.entities.Hero;
 import com.we.SuperHeroSightings.entities.Organization;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author jtriolo
+ * @author Gabriela Gutierrez
  */
 @Repository
 public class OrganizationDaoDB implements OrganizationDao {
@@ -26,17 +27,26 @@ public class OrganizationDaoDB implements OrganizationDao {
 
     @Override
     public Organization getOrganizationByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try{
+            final String SELECT_ORGANIZATION_BY_ID = "SELECT *\n" +
+                    "FROM `organization`\n" +
+                    "WHERE OrganizationPK = ?;";
+            return jdbc.queryForObject(SELECT_ORGANIZATION_BY_ID, new OrganizationMapper(), id);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     @Override
     public List<Organization> getAllOrganizations() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String SELECT_ALL_ORGANIZATIONS = "SELECT * FROM `organization`;";
+        return jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
     }
 
     @Override
     public Organization addOrganization(Organization organization) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final String INSERT_NEW_ORGANIZATION = "";
+        return organization;
     }
 
     @Override
@@ -53,10 +63,5 @@ public class OrganizationDaoDB implements OrganizationDao {
     public List<Organization> getOrganizationsByHero(Hero hero) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-  
-    
 
-
-    
 }
