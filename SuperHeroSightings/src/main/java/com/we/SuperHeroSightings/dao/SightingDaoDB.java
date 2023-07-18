@@ -14,6 +14,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import com.we.SuperHeroSightings.dao.LocationDaoDB.LocationMapper;
+import com.we.SuperHeroSightings.dao.HeroDaoDB.heroMapper;
 
 /**
  *
@@ -44,7 +46,7 @@ public class SightingDaoDB implements SightingDao {
                 "ON h.HeroPK = s.HeroPK " +
                 "WHERE s.SightingPK = ?";
         try {
-            return jdbc.queryForObject(SELECT_HERO_FOR_SIGHTING, new HeroMapper(), id);
+            return jdbc.queryForObject(SELECT_HERO_FOR_SIGHTING, new heroMapper(), id);
         } catch(DataAccessException ex){
             return null;
         }

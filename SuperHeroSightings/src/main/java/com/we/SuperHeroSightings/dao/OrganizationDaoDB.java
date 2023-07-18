@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import com.we.SuperHeroSightings.dao.HeroDaoDB.heroMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,7 +45,7 @@ public class OrganizationDaoDB implements OrganizationDao {
                 "FROM hero h " +
                 "INNER JOIN heroorganization ho ON h.heroPK = ho.heroPK " +
                 "WHERE organizationPK = ?;";
-        return jdbc.query(SELECT_HERO_BY_ORGANIZATION, new HeroMapper(), organization.getId());
+        return jdbc.query(SELECT_HERO_BY_ORGANIZATION, new heroMapper(), organization.getId());
     }
 
     @Override
