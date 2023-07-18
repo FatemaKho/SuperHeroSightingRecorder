@@ -31,11 +31,15 @@ public class HeroDaoDB implements HeroDao {
 
     @Override
     public Hero getHeroByID(int id) {
+        try{
         String sql = "SELECT * FROM hero WHERE HeroPK = ?";
         Hero hero= jdbc.queryForObject(sql, new heroMapper(), id);
         hero.setPower(getPowerForHero(id));
         hero.setOrganizations(getOrganizationsForHero(id));
         return hero;
+        }catch(DataAccessException ex){
+            return null;
+        }
     }
     @Transactional
     @Override
@@ -47,8 +51,6 @@ public class HeroDaoDB implements HeroDao {
         hero.setId(id);
         return hero;
     }
-
-
     @Override
     public List<Hero> getAllHeros() {
         String sql = "SELECT * FROM hero";
@@ -56,11 +58,9 @@ public class HeroDaoDB implements HeroDao {
         for(Hero hero: heroes) {
             hero.setPower(getPowerForHero(hero.getId()));
             hero.setOrganizations(getOrganizationsForHero(hero.getId()));
-
         }
         return heroes;
     }
-
 
     @Transactional
     @Override
