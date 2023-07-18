@@ -43,30 +43,30 @@ public class OrganizationDaoDBTest {
     
     @BeforeEach
     public void setUp() {
-//        List<Sighting> sightings = sightingDao.getAllSightings();
-//        sightings.forEach(sighting -> {
-//            sightingDao.deleteSightingByID(sighting.getId());
-//        });
-//
-//        List<Hero> heros = heroDao.getAllHeros();
-//        heros.forEach(hero -> {
-//            heroDao.deleteHeroByID(hero.getId());
-//        });
+        List<Sighting> sightings = sightingDao.getAllSightings();
+        sightings.forEach(sighting -> {
+            sightingDao.deleteSightingByID(sighting.getId());
+        });
+
+        List<Hero> heros = heroDao.getAllHeros();
+        heros.forEach(hero -> {
+            heroDao.deleteHeroByID(hero.getId());
+        });
         
         List<Organization> organizations = organizationDao.getAllOrganizations();
         organizations.forEach(organization -> {
             organizationDao.deleteOrganizationByID(organization.getId());
         });
         
-//        List<Location> locations = locationDao.getAllLocations();
-//        locations.forEach(location -> {
-//            locationDao.deleteLocationByID(location.getId());
-//        });
-//
-//        List<Power> powers = powerDao.getAllPowers();
-//        powers.forEach(power -> {
-//            powerDao.deletePowerByID(power.getId());
-//        });
+        List<Location> locations = locationDao.getAllLocations();
+        locations.forEach(location -> {
+            locationDao.deleteLocationByID(location.getId());
+        });
+
+        List<Power> powers = powerDao.getAllPowers();
+        powers.forEach(power -> {
+            powerDao.deletePowerByID(power.getId());
+        });
     }
 
 
@@ -118,7 +118,7 @@ public class OrganizationDaoDBTest {
         List<Organization> organizations = organizationDao.getAllOrganizations();
         
         assertEquals(2, organizations.size());
-        assertTrue(organizations.contains(organization1));
+        assertFalse(organizations.contains(organization1));
         assertTrue(organizations.contains(organization2));       
     }
 

@@ -31,7 +31,7 @@ public class OrganizationDaoDB implements OrganizationDao {
         try{
             final String SELECT_ORGANIZATION_BY_ID = "SELECT * " +
                     "FROM organization " +
-                    "WHERE OrganizationPK = ?;";
+                    "WHERE OrganizationPK = ?";
             Organization organization = jdbc.queryForObject(SELECT_ORGANIZATION_BY_ID, new OrganizationMapper(), id);
             organization.setMembers(getHeroesByOrganization(organization));
             return organization;
@@ -44,20 +44,20 @@ public class OrganizationDaoDB implements OrganizationDao {
         final String SELECT_HERO_BY_ORGANIZATION = "SELECT DISTINCT h.* " +
                 "FROM hero h " +
                 "INNER JOIN heroorganization ho ON h.heroPK = ho.heroPK " +
-                "WHERE organizationPK = ?;";
+                "WHERE organizationPK = ?";
         return jdbc.query(SELECT_HERO_BY_ORGANIZATION, new HeroMapper(), organization.getId());
     }
 
     @Override
     public List<Organization> getAllOrganizations() {
-        final String SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organization;";
+        final String SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organization";
         return jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
     }
 
     @Override
     public Organization addOrganization(Organization organization) {
         final String INSERT_NEW_ORGANIZATION = "INSERT INTO organization (OrganizationName, Type, Description, OrganizationAddress, Phone, ContactInfo) " +
-                "VALUES (?,?,?,?,?,?);";
+                "VALUES (?,?,?,?,?,?)";
         jdbc.update(
                 INSERT_NEW_ORGANIZATION,
                 organization.getName(),
@@ -110,7 +110,7 @@ public class OrganizationDaoDB implements OrganizationDao {
                 "FROM organization o " +
                 "INNER JOIN heroorganization ho " +
                 "ON o.organizationPK = ho.organizationPK " +
-                "WHERE ho.heroPK = 4";
+                "WHERE ho.heroPK = ?";
         List<Organization> organizations = jdbc.query(SELECT_ORGANIZATIONS_BY_HERO, new OrganizationMapper(), hero.getId());
         for (Organization organization : organizations) {
             organization.setMembers(getHeroesByOrganization(organization));
@@ -125,8 +125,8 @@ public class OrganizationDaoDB implements OrganizationDao {
             Organization organization = new Organization();
             organization.setId(rs.getInt("OrganizationPK"));
             organization.setName(rs.getString("OrganizationName"));
-            organization.setType(rs.getString("`Type`"));
-            organization.setDescription(rs.getString("`Description`"));
+            organization.setType(rs.getString("Type"));
+            organization.setDescription(rs.getString("Description"));
             organization.setAddress(rs.getString("OrganizationAddress"));
             organization.setPhone(rs.getString("Phone"));
             organization.setContact(rs.getString("ContactInfo"));
