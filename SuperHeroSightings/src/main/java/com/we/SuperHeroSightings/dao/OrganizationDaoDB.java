@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import com.we.SuperHeroSightings.dao.HeroDaoDB.HeroMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ public class OrganizationDaoDB implements OrganizationDao {
     public Organization getOrganizationByID(int id) {
         try{
             final String SELECT_ORGANIZATION_BY_ID = "SELECT * " +
-                    "FROM `organization` " +
+                    "FROM organization " +
                     "WHERE OrganizationPK = ?;";
             Organization organization = jdbc.queryForObject(SELECT_ORGANIZATION_BY_ID, new OrganizationMapper(), id);
             organization.setMembers(getHeroesByOrganization(organization));
@@ -49,7 +50,7 @@ public class OrganizationDaoDB implements OrganizationDao {
 
     @Override
     public List<Organization> getAllOrganizations() {
-        final String SELECT_ALL_ORGANIZATIONS = "SELECT * FROM `organization`;";
+        final String SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organization;";
         return jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
     }
 
