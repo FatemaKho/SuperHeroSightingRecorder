@@ -133,7 +133,7 @@ public class ServiceLayer implements ServiceInterface {
 
     @Override
     public Sighting getSightingByID(int id) {
-        return sightingDao.getSightingByID();
+        return sightingDao.getSightingByID(id);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class ServiceLayer implements ServiceInterface {
 
     @Override
     public Sighting addSighting(Sighting sighting) {
-        return sightingDao.addSighting();
+        return sightingDao.addSighting(sighting);
     }
 
     @Override
