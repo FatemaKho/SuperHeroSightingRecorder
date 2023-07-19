@@ -35,11 +35,15 @@ public interface ServiceInterface {
 
     List<Organization> getOrganizationsByHero(Hero hero);
 
+    void validateOrganization(Organization organization) throws DuplicateNameExistsException, InvalidDataException;
+
     Power getPowerByID(int id);
     List<Power> getAllPowers();
     Power addPower(Power power);
     void updatePower(Power power);
     void deletePowerByID(int id);
+
+    void validatePower(Power power) throws DuplicateNameExistsException;
 
     Sighting getSightingByID(int id);
     List<Sighting> getAllSightings();
