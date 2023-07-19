@@ -48,4 +48,7 @@ public interface ServiceInterface {
     List<Sighting> getSightingsByDate(LocalDateTime date);
     List<Sighting> getSightingsByLocation(Location location);
     List<Sighting> getSightingsByHero(Hero hero);
+
+    public void validateLocation(Location location) throws DuplicateNameExistsException;
+
 }
