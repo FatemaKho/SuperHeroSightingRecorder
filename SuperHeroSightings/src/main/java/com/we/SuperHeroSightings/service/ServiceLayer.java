@@ -3,6 +3,7 @@ package com.we.SuperHeroSightings.service;
 import com.we.SuperHeroSightings.dao.HeroDao;
 import com.we.SuperHeroSightings.dao.LocationDao;
 import com.we.SuperHeroSightings.dao.OrganizationDao;
+import com.we.SuperHeroSightings.dao.PowerDao;
 import com.we.SuperHeroSightings.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class ServiceLayer implements ServiceInterface {
 
     @Autowired
     LocationDao locationDao;
+
+    @Autowired
+    PowerDao powerDao;
 
 
     @Override
@@ -207,27 +211,43 @@ public void validateHero(Hero hero) throws DuplicateNameExistsException {
 
     @Override
     public Power getPowerByID(int id) {
-        return null;
+        return powerDao.getPowerByID(id);
     }
 
     @Override
     public List<Power> getAllPowers() {
-        return null;
+        return powerDao.getAllPowers();
     }
 
     @Override
     public Power addPower(Power power) {
-        return null;
+        return powerDao.addPower(power);
     }
 
     @Override
     public void updatePower(Power power) {
-
+        powerDao.updatePower(power);
     }
 
     @Override
     public void deletePowerByID(int id) {
+        powerDao.deletePowerByID(id);
+    }
 
+    @Override
+    public void validatePower(Power power) throws DuplicateNameExistsException {
+        List<Power> powers = powerDao.getAllPowers();
+        Boolean isDuplicate = false;
+
+        for(Power singlePower : powers) {
+            if(singlePower.getName().toLowerCase().equals(power.getName().toLowerCase())) {
+                isDuplicate = true;
+            }
+        }
+
+        if(isDuplicate) {
+            throw new DuplicateNameExistsException("The power name already exists in the system.");
+        }
     }
 
     @Override
