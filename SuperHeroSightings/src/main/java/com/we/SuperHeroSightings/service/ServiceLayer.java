@@ -1,6 +1,7 @@
 package com.we.SuperHeroSightings.service;
 
 import com.we.SuperHeroSightings.dao.HeroDao;
+import com.we.SuperHeroSightings.dao.LocationDao;
 import com.we.SuperHeroSightings.dao.OrganizationDao;
 import com.we.SuperHeroSightings.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ServiceLayer implements ServiceInterface {
 
     @Autowired
     OrganizationDao organizationDao;
+
+    @Autowired
+    LocationDao locationDao;
 
 
     @Override
@@ -68,33 +72,85 @@ public void validateHero(Hero hero) throws DuplicateNameExistsException {
     }
     @Override
     public Location getLocationByID(int id) {
-        return null;
+        return locationDao.getLocationByID(id);
     }
 
     @Override
     public List<Location> getAllLocations() {
-        return null;
+        return locationDao.getAllLocations();
     }
 
     @Override
     public Location addLocation(Location location) {
-        return null;
+
+        return locationDao.addLocation(location);
     }
 
     @Override
     public void updateLocation(Location location) {
+        locationDao.updateLocation(location);
 
     }
 
     @Override
     public void deleteLocationByID(int id) {
+        locationDao.deleteLocationByID(id);
 
     }
 
     @Override
     public List<Location> getLocationsByHero(Hero hero) {
-        return null;
+        return locationDao.getLocationsByHero(hero);
     }
+
+    private static class LocationValidator {
+
+        // Method to check if the latitude is valid
+        public static boolean isValidLatitude(String latitude) {
+            try {
+                double lat = Double.parseDouble(latitude);
+                return lat >= -90 && lat <= 90;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
+        // Method to check if the longitude is valid
+        public static boolean isValidLongitude(String longitude) {
+            try {
+                double lon = Double.parseDouble(longitude);
+                return lon >= -180 && lon <= 180;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public void validateLocation(Location location) throws DuplicateNameExistsException, InvalidDataException {
+        List<Location> locations = locationDao.getAllLocations();
+        boolean isDupe = false;
+
+        for(Location alocation : locations) {
+            if (alocation.getName().toLowerCase().equals(location.getName().toLowerCase())) {
+                isDupe = true;
+            }
+        }
+        if(isDupe) {
+            throw new DuplicateNameExistsException("Location Name Already Exists");
+        }
+
+        // Validate latitude and longitude
+        if (!LocationValidator.isValidLatitude(location.getLatitude())) {
+            throw new InvalidDataException("Invalid Latitude Format");
+        }
+
+        if (!LocationValidator.isValidLongitude(location.getLongitude())) {
+            throw new InvalidDataException("Invalid Longitude Format");
+        }
+
+    }
+
 
     @Override
     public Organization getOrganizationByID(int id) {
