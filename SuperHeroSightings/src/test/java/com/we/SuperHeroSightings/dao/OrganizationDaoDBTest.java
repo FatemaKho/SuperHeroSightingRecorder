@@ -118,8 +118,8 @@ public class OrganizationDaoDBTest {
         List<Organization> organizations = organizationDao.getAllOrganizations();
         
         assertEquals(2, organizations.size());
-        assertFalse(organizations.contains(organization1));
-        assertTrue(organizations.contains(organization2));       
+        assertTrue(organizations.contains(organization1));
+        assertTrue(organizations.contains(organization2));
     }
 
 

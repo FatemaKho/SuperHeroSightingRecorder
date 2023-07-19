@@ -86,6 +86,7 @@ public class Hero {
         if (this == obj) {
             return true;
         }
+
         if (obj == null) {
             return false;
         }
@@ -111,6 +112,8 @@ public class Hero {
         if (!Objects.equals(this.organizations, other.organizations)) {
             return false;
         }
+
+
         return true;
     }
     
