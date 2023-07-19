@@ -1,6 +1,7 @@
 package com.we.SuperHeroSightings.service;
 
 import com.we.SuperHeroSightings.dao.HeroDao;
+import com.we.SuperHeroSightings.dao.OrganizationDao;
 import com.we.SuperHeroSightings.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +12,9 @@ public class ServiceLayer implements ServiceInterface {
 
     @Autowired
     HeroDao heroDao;
+
+    @Autowired
+    OrganizationDao organizationDao;
 
 
     @Override
@@ -93,32 +97,55 @@ public void validateHero(Hero hero) throws DuplicateNameExistsException {
 
     @Override
     public Organization getOrganizationByID(int id) {
-        return null;
+        return organizationDao.getOrganizationByID(id);
     }
 
     @Override
     public List<Organization> getAllOrganizations() {
-        return null;
+        return organizationDao.getAllOrganizations();
     }
 
     @Override
     public Organization addOrganization(Organization organization) {
-        return null;
+        return organizationDao.addOrganization(organization);
     }
 
     @Override
     public void updateOrganization(Organization organization) {
-
+        organizationDao.updateOrganization(organization);
     }
 
     @Override
     public void deleteOrganizationByID(int id) {
-
+        organizationDao.deleteOrganizationByID(id);
     }
 
     @Override
     public List<Organization> getOrganizationsByHero(Hero hero) {
-        return null;
+
+        return organizationDao.getOrganizationsByHero(hero);
+    }
+
+    @Override
+    public void validateOrganization(Organization organization) throws DuplicateNameExistsException, InvalidDataException {
+        List<Organization> organizations = organizationDao.getAllOrganizations();
+        Boolean isDuplicate = false;
+        String phonePattern = "\\d{3}-\\d{3}-d{4}";
+        String phone = organization.getPhone();
+
+        for(Organization singleOrganization : organizations) {
+            if(singleOrganization.getName().toLowerCase().equals(organization.getName().toLowerCase())) {
+                isDuplicate = true;
+            }
+        }
+
+        if (isDuplicate) {
+            throw new DuplicateNameExistsException("The organization name already exists in the system");
+        }
+
+        if(phone == null || !phone.matches(phonePattern)) {
+            throw new InvalidDataException("Invalid phone format. Please enter valid phone number(Format: ###-###-####");
+        }
     }
 
     @Override
