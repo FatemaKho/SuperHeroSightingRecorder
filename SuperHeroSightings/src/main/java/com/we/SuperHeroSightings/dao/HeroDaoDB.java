@@ -86,13 +86,13 @@ public class HeroDaoDB implements HeroDao {
     @Transactional
     @Override
     public void deleteHeroByID(int id) {
+        String deleteHeroOrganizationSQL = "DELETE FROM heroorganization WHERE HeroPK = ?";
+        jdbc.update(deleteHeroOrganizationSQL, id);
         // First, delete any associated sightings for the hero
         String deleteSightingsSQL = "DELETE FROM sighting WHERE HeroPK = ?";
         jdbc.update(deleteSightingsSQL, id);
 
         // Then, delete any associated records from the heroorganization table
-        String deleteHeroOrganizationSQL = "DELETE FROM heroorganization WHERE HeroPK = ?";
-        jdbc.update(deleteHeroOrganizationSQL, id);
 
         //  delete the hero record from the hero table
         String deleteHeroSQL = "DELETE FROM hero WHERE HeroPK = ?";
@@ -100,28 +100,32 @@ public class HeroDaoDB implements HeroDao {
     }
 
     public List<Hero> getHerosByLocation(Location location) {
-        String sql = "SELECT h.* FROM hero h " +
-                "JOIN sighting s ON h.HeroPK = s.HeroPK " +
-                "JOIN location l ON s.LocationPK = l.LocationPK " +
-                "WHERE l.LocationPK = ?";
-
-        List<Hero> heroesByLocation = jdbc.query(sql, new HeroMapper(), location.getId());
-        return heroesByLocation;
+        String sql = "SELECT DISTINCT h.* FROM hero h INNER JOIN sighting s " +
+                " ON h.heroPK = s.heroPK WHERE s.locationPK = ?";
+        List<Hero> heros = jdbc.query(sql, new HeroMapper(), location.getId());
+        for (Hero hero : heros){
+            hero.setPower(getPowerForHero(hero.getId()));
+            hero.setOrganizations(getOrganizationsForHero(hero.getId()));
+        }
+        return heros;
     }
 
     @Override
     public List<Hero> getHerosByOrganization(Organization organization) {
-        String sql = "SELECT h.* FROM hero h " +
-                "JOIN heroorganization ho ON h.HeroPK = ho.HeroPK " +
-                "WHERE ho.OrganizationPK = ?";
+        String sql = "SELECT DISTINCT h.* FROM hero h INNER JOIN heroorganization ho " +
+                " ON h.heroPK = ho.heroPK WHERE ho.organizationPK = ?";
 
-        List<Hero> herosByOrg = jdbc.query(sql, new HeroMapper(), organization.getId());
-        return herosByOrg;
+        List<Hero> heros = jdbc.query(sql, new HeroMapper(), organization.getId());
+        for (Hero hero : heros){
+            hero.setPower(getPowerForHero(hero.getId()));
+            hero.setOrganizations(getOrganizationsForHero(hero.getId()));
+        }
+        return heros;
     }
 
     private List<Organization> getOrganizationsForHero(int heroId) {
         String sql = "SELECT o.* FROM organization o " +
-                "JOIN heroorganization ho ON o.OrganizationPK = ho.OrganizationPK " +
+                "INNER JOIN heroorganization ho ON o.OrganizationPK = ho.OrganizationPK " +
                 "WHERE ho.HeroPK = ?";
         List<Organization> heroOrganizations = jdbc.query(sql, new OrganizationMapper(), heroId);
         return heroOrganizations;
@@ -129,10 +133,15 @@ public class HeroDaoDB implements HeroDao {
 
     private Power getPowerForHero(int heroId) {
         String sql = "SELECT p.* FROM power p " +
-                "JOIN hero h ON p.PowerPK = h.PowerPK " +
+                "INNER JOIN hero h ON p.PowerPK = h.PowerPK " +
                 "WHERE h.HeroPK = ?";
-        Power heroPower = jdbc.queryForObject(sql, new PowerMapper(), heroId);
-        return heroPower;
+        try{
+            return jdbc.queryForObject(sql, new PowerMapper(), heroId);
+        } catch(DataAccessException ex){
+            return null;
+        }
+        //Power heroPower = jdbc.queryForObject(sql, new PowerMapper(), heroId);
+        //return heroPower;
     }
 
     public static final class HeroMapper implements RowMapper<Hero> {
