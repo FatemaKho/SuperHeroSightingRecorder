@@ -1,5 +1,6 @@
 package com.we.SuperHeroSightings.service;
 
+import com.we.SuperHeroSightings.dao.SightingDao;
 import com.we.SuperHeroSightings.dao.HeroDao;
 import com.we.SuperHeroSightings.dao.LocationDao;
 import com.we.SuperHeroSightings.dao.OrganizationDao;
@@ -11,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 @Service
 public class ServiceLayer implements ServiceInterface {
+    @Autowired
+    SightingDao sightingDao;
 
     @Autowired
     HeroDao heroDao;
@@ -232,41 +235,41 @@ public void validateHero(Hero hero) throws DuplicateNameExistsException {
 
     @Override
     public Sighting getSightingByID(int id) {
-        return null;
+        return sightingDao.getSightingByID(id);
     }
 
     @Override
     public List<Sighting> getAllSightings() {
-        return null;
+        return sightingDao.getAllSightings();
     }
 
     @Override
     public Sighting addSighting(Sighting sighting) {
-        return null;
+        return sightingDao.addSighting(sighting);
     }
 
     @Override
     public void updateSighting(Sighting sighting) {
-
+        sightingDao.updateSighting(sighting);
     }
 
     @Override
     public void deleteSightingByID(int id) {
-
+        sightingDao.deleteSightingByID(id);
     }
 
     @Override
     public List<Sighting> getSightingsByDate(LocalDateTime date) {
-        return null;
+        return sightingDao.getSightingsByDate(date);
     }
 
     @Override
     public List<Sighting> getSightingsByLocation(Location location) {
-        return null;
+        return sightingDao.getSightingsByLocation(location);
     }
 
     @Override
     public List<Sighting> getSightingsByHero(Hero hero) {
-        return null;
+        return sightingDao.getSightingsByHero(hero);
     }
 }
