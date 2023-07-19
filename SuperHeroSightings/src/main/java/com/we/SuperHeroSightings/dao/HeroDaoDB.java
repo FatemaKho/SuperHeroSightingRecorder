@@ -51,7 +51,16 @@ public class HeroDaoDB implements HeroDao {
 
         int id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         hero.setId(id);
+        addHeroToHeroOrganization(hero);
         return hero;
+    }
+
+    private void addHeroToHeroOrganization(Hero hero){
+        String sql = "INSERT INTO HeroOrganization (HeroPK, OrganizationPK) VALUES (?, ?)";
+
+        for (Organization org : hero.getOrganizations()){
+            jdbc.update(sql, hero.getId(), org.getId());
+        }
     }
 
     @Override
@@ -70,6 +79,8 @@ public class HeroDaoDB implements HeroDao {
     public void updateHero(Hero hero) {
         String sql = "UPDATE hero SET HeroName = ?, Type = ?, Description = ?, PowerPK = ? WHERE HeroPK = ?";
         jdbc.update(sql, hero.getName(), hero.getType(), hero.getDescription(), hero.getPower().getId(), hero.getId());
+        jdbc.update("DELETE FROM heroorganization WHERE HeroPK = ?", hero.getId());
+        addHeroToHeroOrganization(hero);
     }
 
     @Transactional
