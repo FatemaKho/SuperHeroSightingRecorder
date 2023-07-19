@@ -1,6 +1,7 @@
 package com.we.SuperHeroSightings.service;
 
 import com.we.SuperHeroSightings.dao.SightingDao;
+import com.we.SuperHeroSightings.dao.HeroDao;
 import com.we.SuperHeroSightings.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,41 +12,59 @@ import java.util.List;
 public class ServiceLayer implements ServiceInterface {
     @Autowired
     SightingDao sightingDao;
+
+    @Autowired
+    HeroDao heroDao;
+
+
     @Override
     public Hero getHeroByID(int id) {
-        return null;
+        return heroDao.getHeroByID(id);
     }
 
     @Override
     public List<Hero> getAllHeros() {
-        return null;
+       return heroDao.getAllHeros();
     }
 
     @Override
     public Hero addHero(Hero hero) {
-        return null;
+        return heroDao.addHero(hero);
     }
 
     @Override
     public void updateHero(Hero hero) {
-
+        heroDao.updateHero(hero);
     }
 
     @Override
     public void deleteHeroByID(int id) {
-
+        heroDao.deleteHeroByID(id);
     }
 
     @Override
     public List<Hero> getHerosByLocation(Location location) {
-        return null;
+        return heroDao.getHerosByLocation(location);
     }
 
     @Override
     public List<Hero> getHerosByOrganization(Organization organization) {
-        return null;
-    }
 
+        return heroDao.getHerosByOrganization(organization);
+    }
+    @Override
+public void validateHero(Hero hero) throws DuplicateNameExistsException {
+        List<Hero> heroes =heroDao.getAllHeros();
+        boolean isDuplicate =false;
+        for(Hero ahero: heroes) {
+            if (ahero.getName().toLowerCase().equals(hero.getName().toLowerCase()))
+                isDuplicate = true;
+        }
+        if(isDuplicate) {
+            throw new DuplicateNameExistsException("Hero/Villain Name Already Exists in System");
+
+        }
+    }
     @Override
     public Location getLocationByID(int id) {
         return null;

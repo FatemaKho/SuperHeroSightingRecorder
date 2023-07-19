@@ -18,6 +18,8 @@ public interface ServiceInterface {
     List<Hero> getHerosByLocation(Location location);
     List<Hero> getHerosByOrganization(Organization organization);
 
+    void validateHero(Hero hero) throws DuplicateNameExistsException;
+
     Location getLocationByID(int id);
     List<Location> getAllLocations();
     Location addLocation(Location location);
