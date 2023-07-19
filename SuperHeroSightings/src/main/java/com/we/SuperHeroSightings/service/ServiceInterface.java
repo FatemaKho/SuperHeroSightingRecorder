@@ -1,12 +1,13 @@
 package com.we.SuperHeroSightings.service;
 
+import com.we.SuperHeroSightings.dao.SightingDao;
 import com.we.SuperHeroSightings.entities.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ServiceInterface {
-
     Hero getHeroByID(int id);
     List<Hero> getAllHeros();
     Hero addHero(Hero hero);
