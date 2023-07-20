@@ -101,13 +101,14 @@
                     <div class="col-9">
                         <select multiple id="members" name="memberId"
                                 class="form-control" >
-                            <option th:each="members : ${members}"
-                                    th:value="${members.id}"
-                                    th:text="${members.name}">
+                            <option th:each="member : ${members}"
+                                    th:value="${member.id}"
+                                    th:text="${member.name}">
                                 Member Name</option>
                         </select>
                     </div>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Edit Organization</button>
                 <button type="button" class="btn btn-primary">Cancel</button>
             </form>

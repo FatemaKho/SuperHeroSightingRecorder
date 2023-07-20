@@ -69,15 +69,12 @@
         <div class="col-6 text-left">
             <span th:text="${location.latitude}">display latitude</span>
         </div>
-
         <div class="col-6 text-right"><strong>Heroes Seen At Location:</strong></div>
         <div class="col-6 text-left">
-                    <span th:each="sighting : ${sighting.locations}">
-                        <span th:text="${hero.name}">display heroes</span><br/>
-                    </span>
+                <span th:each="sighting : ${sightings}">
+                    <span th:text="${sighting.hero.name}">display heroes</span><br/>
+                </span>
         </div>
-
-
     </div>
     <!-- Location Details: End-->
 
