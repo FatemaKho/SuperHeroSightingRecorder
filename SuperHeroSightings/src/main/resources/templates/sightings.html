@@ -23,19 +23,19 @@
     </div>
     <div class="row m-4 border border-dark">
         <div class="col text-center m-3">
-            <a href="Heroes" class="btn btn-outline-primary btn-lg">Heroes</a>
+            <a href="heroes" class="btn btn-outline-primary btn-lg">Heroes</a>
         </div>
         <div class="col text-center m-3">
-            <a href="Powers" class="btn btn-outline-primary btn-lg">Powers</a>
+            <a href="powers" class="btn btn-outline-primary btn-lg">Powers</a>
         </div>
         <div class="col text-center m-3">
-            <a href="Locations" class="btn btn-outline-primary btn-lg">Locations</a>
+            <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
         </div>
         <div class="col text-center m-3">
-            <a href="Organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
+            <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
         </div>
         <div class="col text-center m-3">
-            <a href="Sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
+            <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
         </div>
     </div>
 
@@ -60,8 +60,8 @@
                     <td th:text="${sighting.HeroPK}">Hero ID</td>
                     <td th:text="${sighting.LocationPK}">Location ID</td>
                     <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Details</a></td>
-                    <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Delete</a></td>
+                    <td><a href="#" th:href="@{/editSighting(id=${sighting.id})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deleteSighting(id=${sighting.id})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
