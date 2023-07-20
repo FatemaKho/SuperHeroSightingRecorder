@@ -56,5 +56,4 @@ public interface ServiceInterface {
     List<Sighting> getSightingsByHero(Hero hero);
 
     public void validateLocation(Location location) throws DuplicateNameExistsException, InvalidDataException;
-    public void validateOrganization(Organization organization) throws DuplicateNameExistsException, InvalidDataException;
 }
