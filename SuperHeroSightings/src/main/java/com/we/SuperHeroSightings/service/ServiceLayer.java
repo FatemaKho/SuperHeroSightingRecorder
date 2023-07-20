@@ -25,7 +25,9 @@ public class ServiceLayer implements ServiceInterface {
 
     @Autowired
     PowerDao powerDao;
-    SightingDao sigtingDao;
+
+    @Autowired
+    SightingDao sightingDao;
 
 
     @Override
@@ -254,41 +256,41 @@ public void validateHero(Hero hero) throws DuplicateNameExistsException {
 
     @Override
     public Sighting getSightingByID(int id) {
-        return sigtingDao.getSightingByID(id);
+        return sightingDao.getSightingByID(id);
     }
 
     @Override
     public List<Sighting> getAllSightings() {
-        return sigtingDao.getAllSightings();
+        return sightingDao.getAllSightings();
     }
 
     @Override
     public Sighting addSighting(Sighting sighting) {
-        return sigtingDao.addSighting(sighting);
+        return sightingDao.addSighting(sighting);
     }
 
     @Override
     public void updateSighting(Sighting sighting) {
-        sigtingDao.updateSighting(sighting);
+        sightingDao.updateSighting(sighting);
     }
 
     @Override
     public void deleteSightingByID(int id) {
-        sigtingDao.deleteSightingByID(id);
+        sightingDao.deleteSightingByID(id);
     }
 
     @Override
     public List<Sighting> getSightingsByDate(LocalDateTime date) {
-        return sigtingDao.getSightingsByDate(date);
+        return sightingDao.getSightingsByDate(date);
     }
 
     @Override
     public List<Sighting> getSightingsByLocation(Location location) {
-            return sigtingDao.getSightingsByLocation(location);
+            return sightingDao.getSightingsByLocation(location);
     }
 
     @Override
     public List<Sighting> getSightingsByHero(Hero hero) {
-        return sigtingDao.getSightingsByHero(hero);
+        return sightingDao.getSightingsByHero(hero);
     }
 }

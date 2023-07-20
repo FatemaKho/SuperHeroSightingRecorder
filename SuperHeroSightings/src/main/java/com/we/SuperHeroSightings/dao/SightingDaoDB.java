@@ -52,7 +52,7 @@ public class SightingDaoDB implements SightingDao {
     }
 
     private Location getLocationForSighting(int id){
-        final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM Location l" +
+        final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM Location l " +
                 "INNER JOIN Sighting s " +
                 "ON l.LocationPK = s.LocationPK " +
                 "WHERE s.SightingPK = ?";

@@ -1,15 +1,18 @@
-/*package com.we.SuperHeroSightings.Controller;
+package com.we.SuperHeroSightings.Controller;
 
 import com.we.SuperHeroSightings.entities.*;
 import com.we.SuperHeroSightings.service.ServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class HeroController {
 
     @Autowired
@@ -30,58 +33,66 @@ public class HeroController {
 
     @PostMapping("addHero")
     public String addSighting(Hero hero, HttpServletRequest request) {
-        String powerId = request.getParameter("heroPK");
-        String organizationId = request.getParameter("locationPK");
+        String powerId = request.getParameter("powerPK");
+        String[] organizationIds = request.getParameterValues("organizationPK");
 
-        sighting.setHero(service.getHeroByID(Integer.parseInt(heroId)));
-        sighting.setLocation(service.getLocationByID(Integer.parseInt(locationId)));
+        hero.setPower(service.getPowerByID(Integer.parseInt(powerId)));
 
+        List<Organization> organizations = new ArrayList<>();
+        for(String organizationId : organizationIds) {
+            organizations.add(service.getOrganizationByID(Integer.parseInt(organizationId)));
+        }
+        hero.setOrganizations(organizations);
+        service.addHero(hero);
 
-        service.addSighting(sighting);
-
-        return "redirect:/sightings";
+        return "redirect:/heroes";
     }
 
-    @GetMapping("deleteSighting")
-    public String deleteSighting(Integer id) {
-        service.deleteSightingByID(id);
+    @GetMapping("deleteHero")
+    public String deleteHero(Integer id) {
+        service.deleteHeroByID(id);
 
-        return "redirect:/sightings";
+        return "redirect:/heroes";
     }
 
-    @GetMapping("sightingDetail")
-    public String sightingDetail(Integer id, Model model) {
-        Sighting sighting = service.getSightingByID(id);
-        model.addAttribute("sighting", sighting);
+    @GetMapping("heroDetail")
+    public String heroDetail(Integer id, Model model) {
+        Hero hero = service.getHeroByID(id);
+        model.addAttribute("hero", hero);
 
-        return "sightingDetail";
+        return "heroDetail";
     }
 
-    @GetMapping("editSighting")
-    public String editSighting(Integer id, Model model) {
-        Sighting sighting = service.getSightingByID(id);
-        List<Hero> heroes = service.getAllHeros();
-        List<Location> locations = service.getAllLocations();
-        model.addAttribute("sighting", sighting);
-        model.addAttribute("heroes", heroes);
-        model.addAttribute("locations", locations);
+    @GetMapping("editHero")
+    public String editHero(Integer id, Model model) {
+        Hero hero = service.getHeroByID(id);
+        List<Power> powers = service.getAllPowers();
+        List<Organization> organizations = service.getAllOrganizations();
+        model.addAttribute("hero", hero);
+        model.addAttribute("powers", powers);
+        model.addAttribute("organization", organizations);
 
-        return "editSighting";
+        return "editHero";
     }
 
-    @PostMapping("editSighting")
-    public String performEditSighting(Sighting sighting, HttpServletRequest request) {
-        String heroId = request.getParameter("heroPK");
-        String locationId = request.getParameter("locationPK");
+    @PostMapping("editHero")
+    public String performEditHero(Hero hero, HttpServletRequest request) {
+        String powerId = request.getParameter("powerPK");
+        String[] organizationIds = request.getParameterValues("organizationPK");
 
-        sighting.setHero(service.getHeroByID(Integer.parseInt(heroId)));
-        sighting.setLocation(service.getLocationByID(Integer.parseInt(locationId)));
+        hero.setPower(service.getPowerByID(Integer.parseInt(powerId)));
 
-        service.updateSighting(sighting);
+        List<Organization> organizations = new ArrayList<>();
+        for(String organizationId : organizationIds) {
+            organizations.add(service.getOrganizationByID(Integer.parseInt(organizationId)));
+        }
+        hero.setOrganizations(organizations);
 
-        return "redirect:/sightings";
+        service.updateHero(hero);
+
+        return "redirect:/heroes";
     }
 
 
 
-} */
+}

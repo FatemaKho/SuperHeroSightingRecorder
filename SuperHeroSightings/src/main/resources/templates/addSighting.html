@@ -77,7 +77,7 @@
                     <label for="location" class="col-3 col-form-label">
                         Location name</label>
                     <div class="col-9">
-                        <select id="location" name="location" class="form-control" >
+                        <select id="location" name="locationPK" class="form-control" >
                             <option th:each="location : ${locations}"
                                     th:value="${location.id}"
                                     th:text="${Location.name}">

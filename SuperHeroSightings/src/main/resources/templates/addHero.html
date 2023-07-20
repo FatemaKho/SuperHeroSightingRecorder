@@ -73,7 +73,7 @@
                     <label for="power" class="col-3 col-form-label">
                         Power</label>
                     <div class="col-9">
-                        <select id="powerPK" name="power" class="form-control" >
+                        <select id="power" name="powerPK" class="form-control" >
                             <option th:each="power : ${powers}"
                                     th:value="${power.id}"
                                     th:text="${power.name}">
@@ -85,7 +85,7 @@
                     <label for="organizations" class="col-3 col-form-label">
                         Organizations</label>
                     <div class="col-9">
-                        <select multiple id="organizations" name="organizationId"
+                        <select multiple id="organizations" name="organizationPK"
                                 class="form-control" >
                             <option th:each="organization : ${organizations}"
                                     th:value="${organization.id}"
