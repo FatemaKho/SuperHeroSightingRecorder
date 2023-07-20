@@ -66,26 +66,26 @@
                         Hero</label>
                     <div class="col-9">
                         <select id="hero" name="hero" class="form-control" >
-                            <option th:each="hero : ${heros}"
-                                    th:value="${hero.HeroPK}"
-                                    th:text="${hero.HeroName}">
+                            <option th:each="hero : ${heroes}"
+                                    th:value="${hero.id}"
+                                    th:text="${hero.name}">
                                 Hero Name</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="location" class="col-3 col-form-label">
-                        Hero</label>
+                        Location name</label>
                     <div class="col-9">
                         <select id="location" name="location" class="form-control" >
                             <option th:each="location : ${locations}"
-                                    th:value="${location.LocationPK}"
-                                    th:text="${Location.LocationName}">
+                                    th:value="${location.id}"
+                                    th:text="${Location.name}">
                                 Location Name</option>
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Sighting</button>
+                <button type="submit" class="btn btn-primary">Edit Sighting</button>
                 <button type="button" class="btn btn-primary">Cancel</button>
             </form>
         </div>
