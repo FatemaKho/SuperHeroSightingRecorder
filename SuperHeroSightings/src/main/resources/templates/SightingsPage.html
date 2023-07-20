@@ -49,6 +49,8 @@
                     <th>Hero</th>
                     <th>Location</th>
                     <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -58,11 +60,55 @@
                     <td th:text="${sighting.HeroPK}">Hero ID</td>
                     <td th:text="${sighting.LocationPK}">Location ID</td>
                     <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Details</a></td>
+                    <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-1">
+            <table class="table table-striped">
+                <div class="form-group row">
+                    <label for="sightingDate" class="col-3 col-form-label">
+                        Display Sightings By Date</label>
+                    <div class="col-9">
+                        <input type="text" name="sightingDate"
+                               id="SightingDate"  placeholder="01/21/2023" class="form-control"/>
+                    </div>
+                </div>
+                <di>
+                <button type="submit" class="btn btn-primary">Search Date</button>
+                </di>
+                <button type="reset" class="btn btn-primary">Cancel</button>
+            </table>
+            </div>
+        </div>
+
+
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-1">
+            <table class="table table-striped">
+                <div class="form-group row">
+                    <label for="HeroName" class="col-3 col-form-label">
+                        Display Sightings By Hero/Villain</label>
+                    <div class="col-9">
+                        <input type="text" name="sightingDate"
+                               id="HeroName"  placeholder="Spiderman" class="form-control"/>
+                    </div>
+                </div>
+                <di>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </di>
+                <button type="reset" class="btn btn-primary">Cancel</button>
+            </table>
+        </div>
+    </div>
+
+
 
 
 
