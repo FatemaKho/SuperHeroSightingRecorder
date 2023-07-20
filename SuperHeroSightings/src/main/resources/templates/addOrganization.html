@@ -41,10 +41,10 @@
 
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Add Hero</span>
+            <span class="h3">Add Organization</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="addHero" method="POST">
+            <form action="addOrganization" method="POST">
                 <div class="form-group row">
                     <label for="name" class="col-3 col-form-label">
                         Name</label>
@@ -70,31 +70,43 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="power" class="col-3 col-form-label">
-                        Power</label>
+                    <label for="address" class="col-3 col-form-label">
+                        Address</label>
                     <div class="col-9">
-                        <select id="power" name="power" class="form-control" >
-                            <option th:each="power : ${powers}"
-                                    th:value="${power.id}"
-                                    th:text="${power.name}">
-                                Power</option>
-                        </select>
+                        <input type="text" name="address"
+                               id="address" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="organizations" class="col-3 col-form-label">
-                        Organizations</label>
+                    <label for="phone" class="col-3 col-form-label">
+                        Phone</label>
                     <div class="col-9">
-                        <select multiple id="organizations" name="organizationId"
+                        <input type="text" name="phone"
+                               id="phone" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="contact" class="col-3 col-form-label">
+                        Contact</label>
+                    <div class="col-9">
+                        <input type="text" name="contact"
+                               id="contact" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="members" class="col-3 col-form-label">
+                        Members</label>
+                    <div class="col-9">
+                        <select multiple id="members" name="memberId"
                                 class="form-control" >
-                            <option th:each="organization : ${organizations}"
-                                    th:value="${organization.id}"
-                                    th:text="${organization.name}">
-                                Organization Name</option>
+                            <option th:each="member : ${members}"
+                                    th:value="${member.id}"
+                                    th:text="${member.name}">
+                                Member Name</option>
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Hero</button>
+                <button type="submit" class="btn btn-primary">Add Organization</button>
                 <button type="button" class="btn btn-primary">Cancel</button>
             </form>
         </div>
