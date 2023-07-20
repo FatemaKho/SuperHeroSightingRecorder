@@ -44,24 +44,27 @@
       <table class="table table-striped">
         <thead>
         <tr>
-          <th>Date</th>
+          <th>Name</th>
+          <th>Type</th>
           <th>Description</th>
-          <th>Hero</th>
-          <th>Location</th>
+          <th>Power</th>
+          <th>Organizations</th>
           <th>Details</th>
           <th>Edit</th>
           <th>Delete</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="sighting : ${sightings}">
-          <td th:text='${sighting.date}'>Date</td>
-          <td th:text="${sighting.description}">Description</td>
-          <td th:text="${sighting.hero.name}">Hero ID</td>
-          <td th:text="${sighting.location.name}">Location ID</td>
-          <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Details</a></td>
-          <td><a href="#" th:href="@{/editSighting(id=${sighting.id})}">Edit</a></td>
-          <td><a href="#" th:href="@{/deleteSighting(id=${sighting.id})}">Delete</a></td>
+        <tr th:each="hero : ${heroes}">
+          <td th:text='${hero.name}'>Name</td>
+          <td th:text="${hero.type}">Type</td>
+          <td th:text="${hero.description}">Description</td>
+          <td th:text="${hero.power.name}">Power</td>
+          <td> <span th:each="organization : ${hero.organizations}" th:text="${organization.name}">Organization Name</span>
+          </td>
+          <td><a href="#" th:href="@{/heroDetail(id=${hero.id})}">Details</a></td>
+          <td><a href="#" th:href="@{/editHero(id=${hero.id})}">Edit</a></td>
+          <td><a href="#" th:href="@{/deleteHero(id=${hero.id})}">Delete</a></td>
         </tr>
         </tbody>
       </table>
