@@ -65,7 +65,7 @@
                     <label for="hero" class="col-3 col-form-label">
                         Hero</label>
                     <div class="col-9">
-                        <select id="hero" name="hero" class="form-control" >
+                        <select id="hero" name="heroPK" class="form-control" >
                             <option th:each="hero : ${heros}"
                                     th:value="${hero.HeroPK}"
                                     th:text="${hero.HeroName}">
@@ -77,7 +77,7 @@
                     <label for="location" class="col-3 col-form-label">
                         Hero</label>
                     <div class="col-9">
-                        <select id="location" name="location" class="form-control" >
+                        <select id="location" name="locationPK" class="form-control" >
                             <option th:each="location : ${locations}"
                                     th:value="${location.LocationPK}"
                                     th:text="${Location.LocationName}">
