@@ -80,7 +80,7 @@
                         <select id="location" name="locationPK" class="form-control" >
                             <option th:each="location : ${locations}"
                                     th:value="${location.id}"
-                                    th:text="${Location.name}">
+                                    th:text="${location.name}">
                                 Location Name</option>
                         </select>
                     </div>
