@@ -52,7 +52,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="power : ${descriptions}">
+        <tr th:each="power : ${powers}">
           <td th:text='${power.name}'>Name</td>
           <td th:text="${power.description}">Description</td>
           <td><a href="#" th:href="@{/powerDetail(id=${power.id})}">Details</a></td>
