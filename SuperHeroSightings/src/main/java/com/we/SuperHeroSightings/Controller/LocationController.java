@@ -54,12 +54,12 @@ public class LocationController {
         return "redirect:/locations";
     }
 
-    @GetMapping("locationsDetail")
+    @GetMapping("locationDetail")
     public String locationDetail(Integer id, Model model) {
         Location location = service.getLocationByID(id);
         model.addAttribute("location", location);
 
-        return "locationsDetail";
+        return "locationDetail";
     }
 
     @GetMapping("editLocation")
