@@ -60,7 +60,15 @@
           <td><a href="#" th:href="@{/deletePower(id=${power.id})}">Delete</a></td>
         </tr>
         </tbody>
+
+
       </table>
+
+      <div>
+      <form action="addPower" method="POST">
+        <button type="submit" class="btn btn-primary">Add powers</button>
+      </form>
+      </div>
     </div>
   </div>
 

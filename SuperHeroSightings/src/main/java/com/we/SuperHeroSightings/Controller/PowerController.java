@@ -27,6 +27,10 @@ public class PowerController {
         return "powers";
     }
 
+    @GetMapping("addPower")
+    public String addPower(Integer id, Model model) {
+        return "addPower";
+    }
 
     @PostMapping("addPower")
     public String addPower(HttpServletRequest request) {
