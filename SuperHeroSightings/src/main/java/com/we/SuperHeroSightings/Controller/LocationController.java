@@ -57,7 +57,9 @@ public class LocationController {
     @GetMapping("locationDetail")
     public String locationDetail(Integer id, Model model) {
         Location location = service.getLocationByID(id);
+        List<Sighting> sightings = service.getSightingsByLocation(location);
         model.addAttribute("location", location);
+        model.addAttribute("sightings", sightings);
 
         return "locationDetail";
     }

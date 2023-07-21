@@ -58,6 +58,8 @@ public class HeroController {
     @GetMapping("heroDetail")
     public String heroDetail(Integer id, Model model) {
         Hero hero = service.getHeroByID(id);
+        List<Sighting> sightings = service.getSightingsByHero(hero);
+        model.addAttribute("sightings", sightings);
         model.addAttribute("hero", hero);
 
         return "heroDetail";

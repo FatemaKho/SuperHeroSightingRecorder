@@ -1,6 +1,7 @@
 package com.we.SuperHeroSightings.Controller;
 
 
+import com.we.SuperHeroSightings.entities.Hero;
 import com.we.SuperHeroSightings.entities.Power;
 import com.we.SuperHeroSightings.service.ServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class PowerController {
@@ -49,6 +51,8 @@ public class PowerController {
     @GetMapping("powerDetail")
     public String powerDetail(Integer id, Model model) {
         Power power = service.getPowerByID(id);
+        List<Hero> heroes = service.getAllHeros();
+        model.addAttribute("heroes", heroes);
         model.addAttribute("power", power);
 
         return "powerDetail";
