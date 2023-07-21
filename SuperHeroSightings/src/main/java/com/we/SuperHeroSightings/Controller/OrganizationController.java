@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,14 +42,34 @@ public class OrganizationController {
     }
 
     @PostMapping("addOrganization")
-    public String addOrganization(@Valid Organization organization, BindingResult result) {
-        // validations go here - field errors
-        if (result.hasErrors()){
+    public String addOrganization(@ModelAttribute("organization") @Valid Organization organization, BindingResult result, HttpServletRequest request) {
+        // Access request parameters using the HttpServletRequest object if needed
+        String name = request.getParameter("name");
+        String type = request.getParameter("type");
+        String description = request.getParameter("description");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String contact = request.getParameter("contact");
+
+        // Set the form parameters to the Organization object
+        organization.setName(name);
+        organization.setType(type);
+        organization.setDescription(description);
+        organization.setAddress(address);
+        organization.setPhone(phone);
+        organization.setContact(contact);
+
+        if (result.hasErrors()) {
+            // If there are validation errors, return to the form page to display them
             return "addOrganization";
         }
+
+        // If there are no validation errors, continue with the logic to save the organization
         service.addOrganization(organization);
+
         return "redirect:/organizations";
     }
+
 
 
 
