@@ -81,8 +81,8 @@ public class SightingController {
 
     @PostMapping("editSighting")
     public String performEditSighting(Sighting sighting, HttpServletRequest request) {
-        String heroId = request.getParameter("heroPK");
-        String locationId = request.getParameter("locationPK");
+        String heroId = request.getParameter("hero");
+        String locationId = request.getParameter("location");
 
         sighting.setHero(service.getHeroByID(Integer.parseInt(heroId)));
         sighting.setLocation(service.getLocationByID(Integer.parseInt(locationId)));
