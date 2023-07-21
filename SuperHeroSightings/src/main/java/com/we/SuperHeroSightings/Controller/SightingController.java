@@ -34,10 +34,10 @@ public class SightingController {
 
     @GetMapping("addSighting")
     public String addSighting(Model model) {
-        //List<Hero> heroes = service.getAllHeros();
-        //List<Location> locations = service.getAllLocations();
-        //model.addAttribute("locations", locations);
-        //model.addAttribute("heroes", heroes);
+        List<Hero> heroes = service.getAllHeros();
+        List<Location> locations = service.getAllLocations();
+        model.addAttribute("locations", locations);
+        model.addAttribute("heroes", heroes);
         return "addSighting";
     }
 
