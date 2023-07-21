@@ -67,9 +67,9 @@ public class OrganizationController {
     @GetMapping("editOrganization")
     public String editOrganization(Integer id, Model model) {
         Organization organization = service.getOrganizationByID(id);
-        List<Hero> heroes = service.getAllHeros();
+        List<Hero> members = service.getAllHeros();
         model.addAttribute("organization", organization);
-        model.addAttribute("heroes", heroes);
+        model.addAttribute("members", members);
 
         return "editOrganization";
     }
