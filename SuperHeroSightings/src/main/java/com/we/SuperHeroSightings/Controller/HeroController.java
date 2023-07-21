@@ -77,7 +77,7 @@ public class HeroController {
         List<Organization> organizations = service.getAllOrganizations();
         model.addAttribute("hero", hero);
         model.addAttribute("powers", powers);
-        model.addAttribute("organization", organizations);
+        model.addAttribute("organizations", organizations);
 
         return "editHero";
     }
