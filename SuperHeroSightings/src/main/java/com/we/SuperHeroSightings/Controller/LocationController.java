@@ -29,7 +29,19 @@ public class LocationController {
 
 
     @PostMapping("addLocation")
-    public String addLocation(Location location, HttpServletRequest request) {
+    public String addLocation(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String address = request.getParameter("address");
+        String longitude = request.getParameter("longitude");
+        String latitude = request.getParameter("latitude");
+
+        Location location = new Location();
+        location.setName(name);
+        location.setDescription(description);
+        location.setAddress(address);
+        location.setLongitude(longitude);
+        location.setLatitude(latitude);
         service.addLocation(location);
 
         return "redirect:/locations";
@@ -42,18 +54,17 @@ public class LocationController {
         return "redirect:/locations";
     }
 
-    @GetMapping("locationDetail")
+    @GetMapping("locationsDetail")
     public String locationDetail(Integer id, Model model) {
         Location location = service.getLocationByID(id);
-        List<Sighting> sightings = service.getSightingsByLocation(location);
         model.addAttribute("location", location);
-        model.addAttribute("sightings", sightings);
 
-        return "locationDetail";
+        return "locationsDetail";
     }
 
     @GetMapping("editLocation")
-    public String editLocation(Integer id, Model model) {
+    public String editLocation(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
         Location location = service.getLocationByID(id);
         model.addAttribute("location", location);
 
@@ -61,14 +72,17 @@ public class LocationController {
     }
 
     @PostMapping("editLocation")
-    public String performEditSighting(Location location, HttpServletRequest request) {
+    public String performEditSighting(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location location = service.getLocationByID(id);
+        location.setName(request.getParameter("name"));
+        location.setDescription(request.getParameter("description"));
+        location.setAddress(request.getParameter("address"));
+        location.setLongitude(request.getParameter("longitude"));
+        location.setLatitude(request.getParameter("latitude"));
 
         service.updateLocation(location);
 
         return "redirect:/locations";
     }
-
-
-
-
 }
