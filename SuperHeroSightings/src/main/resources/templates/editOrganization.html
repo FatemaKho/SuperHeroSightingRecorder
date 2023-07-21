@@ -92,23 +92,10 @@
                 </div>
 
                 <!-- Make sure controller references the members list. is it members or member?-->
-                <div class="form-group row">
-                    <label for="members" class="col-3 col-form-label">
-                        Members</label>
-                    <div class="col-9">
-                        <select multiple id="members" name="memberId"
-                                class="form-control" >
-                            <option th:each="member : ${members}"
-                                    th:value="${member.id}"
-                                    th:text="${member.name}"
-                                    th:selected="${organization.members.contains(member)}">
-                                Member Name</option>
-                        </select>
-                    </div>
-                </div>
+
                 <input type="hidden" name="id" th:value="${organization.id}"/>
                 <button type="submit" class="btn btn-primary">Edit Organization</button>
-                <button type="button" class="btn btn-primary">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/organizations'">Cancel</button>
             </form>
         </div>
     </div>

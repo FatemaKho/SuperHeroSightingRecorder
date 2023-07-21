@@ -50,7 +50,7 @@
                         Name</label>
                     <div class="col-9">
                         <input type="text" name="name"
-                               id="name" class="form-control"/>
+                               id="name" class="form-control" th:value="${organization.name}"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -58,14 +58,14 @@
                         Type</label>
                     <div class="col-9">
                         <input type="text" name="type"
-                               id="type" class="form-control"/>
+                               id="type" class="form-control" th:value="${organization.type}"/>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="description" class="col-3 col-form-label">
                         Description</label>
                     <div class="col-9">
-                        <textarea id="description" name="description" rows="4" cols="50">
+                        <textarea id="description" name="description" rows="4" cols="50" th:field="${organization.description}">
                         </textarea>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                         Address</label>
                     <div class="col-9">
                         <input type="text" name="address"
-                               id="address" class="form-control"/>
+                               id="address" class="form-control" th:value="${organization.address}"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -82,7 +82,7 @@
                         Phone</label>
                     <div class="col-9">
                         <input type="text" name="phone"
-                               id="phone" class="form-control"/>
+                               id="phone" class="form-control" th:value="${organization.phone}"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -90,24 +90,11 @@
                         Contact</label>
                     <div class="col-9">
                         <input type="text" name="contact"
-                               id="contact" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="members" class="col-3 col-form-label">
-                        Members</label>
-                    <div class="col-9">
-                        <select multiple id="members" name="memberId"
-                                class="form-control" >
-                            <option th:each="members : ${members}"
-                                    th:value="${members.id}"
-                                    th:text="${members.name}">
-                                Member Name</option>
-                        </select>
+                               id="contact" class="form-control" th:value="${organization.contact}"/>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Organization</button>
-                <button type="button" class="btn btn-primary">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/organizations'">Cancel</button>
             </form>
         </div>
     </div>
