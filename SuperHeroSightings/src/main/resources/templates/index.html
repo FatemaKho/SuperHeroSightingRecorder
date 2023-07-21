@@ -57,7 +57,7 @@
                     <td th:text="${sighting.description}">Description</td>
                     <td th:text="${sighting.hero.name}">Hero Name</td>
                     <td th:text="${sighting.location.name}">Location Name</td>
-                    <td><a href="#" th:href="@{/detailSighting(id=${sighting.id})}">Details</a></td>
+                    <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Details</a></td>
                 </tr>
                 </tbody>
             </table>
