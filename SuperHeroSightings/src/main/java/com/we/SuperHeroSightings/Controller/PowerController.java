@@ -7,10 +7,13 @@ import com.we.SuperHeroSightings.service.ServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,23 +30,24 @@ public class PowerController {
         return "powers";
     }
 
-    @GetMapping("addPower")
-    public String addPower(Integer id, Model model) {
+    @GetMapping("/addPower")
+    public String showAddPowerForm(Model model) {
+        model.addAttribute("power", new Power());
         return "addPower";
     }
 
-    @PostMapping("addPower")
-    public String addPower(HttpServletRequest request) {
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
+    @PostMapping("/addPower")
+    public String addPower(@ModelAttribute("power") @Valid Power power, BindingResult result) {
+        if (result.hasErrors()) {
+            // If there are validation errors, return to the form page to display them
+            return "addPower";
+        }
 
-        Power power = new Power();
-        power.setName(name);
-        power.setDescription(description);
         service.addPower(power);
 
         return "redirect:/powers";
     }
+
 
     @PostMapping("deletePower")
     public String deletePower(Integer id) {

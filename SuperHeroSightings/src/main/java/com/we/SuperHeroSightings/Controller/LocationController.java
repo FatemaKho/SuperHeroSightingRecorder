@@ -36,31 +36,18 @@ public class LocationController {
         return "addLocation";
     }
 
-    @PostMapping("addLocation")
-    public String addLocation(@ModelAttribute("location") @Valid Location location, BindingResult result, HttpServletRequest request) {
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String address = request.getParameter("address");
-        String longitude = request.getParameter("longitude");
-        String latitude = request.getParameter("latitude");
-
-        // Set the form parameters to the Location object
-        location.setName(name);
-        location.setDescription(description);
-        location.setAddress(address);
-        location.setLongitude(longitude);
-        location.setLatitude(latitude);
-
+    @PostMapping("/addLocation")
+    public String addLocation(@ModelAttribute("location") @Valid Location location, BindingResult result) {
         if (result.hasErrors()) {
-            // If there are validation errors, return to the form page to display them
-            return "addLocation"; // Return to the form page to display errors
+            return "addLocation";
         }
 
-        // If there are no validation errors, continue with the logic to save the location
-        // service.addLocation(location);
+        service.addLocation(location);
 
         return "redirect:/locations";
     }
+
+
 
 
     @PostMapping("deleteLocation")

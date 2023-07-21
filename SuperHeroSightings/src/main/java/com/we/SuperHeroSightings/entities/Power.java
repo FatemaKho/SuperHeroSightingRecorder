@@ -15,6 +15,8 @@ public class Power {
     @NotBlank(message = "Power must not be blank")
 
     private String name;
+    @NotBlank(message = "Description must not be blank")
+
     private String description;
 
     public int getId() {
