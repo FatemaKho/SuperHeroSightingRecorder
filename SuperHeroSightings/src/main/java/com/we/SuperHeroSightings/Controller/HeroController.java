@@ -32,12 +32,16 @@ public class HeroController {
 
     @GetMapping("addHero")
     public String addHero(Model model) {
+        List<Power> powers = service.getAllPowers();
+        List<Organization> organizations = service.getAllOrganizations();
+        model.addAttribute("powers", powers);
+        model.addAttribute("organizations", organizations);
         return "addHero";
     }
 
 
     @PostMapping("addHero")
-    public String addSighting(Hero hero, HttpServletRequest request) {
+    public String addHero(Hero hero, HttpServletRequest request) {
         String powerId = request.getParameter("powerPK");
         String[] organizationIds = request.getParameterValues("organizationPK");
 
