@@ -96,23 +96,29 @@
             </div>
         </div>
 
-
     <div class="row m-4 border border-dark">
         <div class="col text-center m-1">
-            <table class="table table-striped">
-                <div class="form-group row">
-                    <label for="HeroName" class="col-3 col-form-label">
-                        Display Sightings By Hero/Villain</label>
-                    <div class="col-9">
-                        <input type="text" name="sightingDate"
-                               id="HeroName"  placeholder="Spiderman" class="form-control"/>
+            <form action="/searchSightingsByHero" method="get">
+                <table class="table table-striped">
+                    <div class="form-group row">
+                        <label for="HeroName" class="col-3 col-form-label">
+                            Display Sightings By Hero/Villain</label>
+                        <div class="col-9">
+                            <select id="HeroName" name="heroName" class="form-control">
+                                <option value="">Select a Hero/Villain</option>
+                                <!-- Loop through the list of heroes from the model -->
+                                <option th:each="hero : ${heroes}" th:value="${hero.name}" th:text="${hero.name}">
+                                    Hero Name
+                                </option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <di>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </di>
-                <button type="reset" class="btn btn-primary">Cancel</button>
-            </table>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button type="reset" class="btn btn-primary">Cancel</button>
+                    </div>
+                </table>
+            </form>
         </div>
     </div>
     <div class="col text-center m-3">

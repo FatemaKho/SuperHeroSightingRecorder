@@ -13,9 +13,14 @@ import javax.validation.constraints.Size;
 public class Hero {
     
     private int id;
-    
+
+    @NotBlank(message = "please enter name")
     private String name;
+
+    @NotBlank(message = "please select hero or villain")
     private String type;
+
+    @NotBlank(message = "description must not be blank")
     private String description;    
     private Power power;
     private List<Organization> organizations;
