@@ -57,7 +57,7 @@ public class OrganizationController {
     public String deleteOrganization(Integer id) {
         service.deleteOrganizationByID(id);
 
-        return "redirect:/organization";
+        return "redirect:/organizations";
     }
 
 
