@@ -45,7 +45,7 @@ public class PowerController {
         return "redirect:/powers";
     }
 
-    @GetMapping("deletePower")
+    @PostMapping("deletePower")
     public String deletePower(Integer id) {
         service.deletePowerByID(id);
 

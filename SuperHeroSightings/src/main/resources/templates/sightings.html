@@ -61,7 +61,15 @@
                     <td th:text="${sighting.location.name}">Location ID</td>
                     <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Details</a></td>
                     <td><a href="#" th:href="@{/editSighting(id=${sighting.id})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteSighting(id=${sighting.id})}">Delete</a></td>
+                    <td>
+                        <!-- Form for delete action -->
+                        <form th:action="@{/deleteSighting(id=${sighting.id})}" method="post">
+                            <button type="submit" class="btn btn-link text-danger"
+                                    onclick="return confirm('Are you sure you want to delete this sighting?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
