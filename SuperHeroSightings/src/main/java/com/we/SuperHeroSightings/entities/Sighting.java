@@ -15,9 +15,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Sighting {
     
     private int id;
-    private String description;  
+    @NotBlank(message = "Description must not be blank")
+    private String description;
+    @NotBlank(message = "Date must not be blank")
     private LocalDateTime date;
+    //@NotBlank(message = "Hero must not be blank")
     private Hero hero;
+    //@NotBlank(message = "Location must not be blank")
     private Location location;
 
 
