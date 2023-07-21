@@ -85,13 +85,15 @@
                     <label for="organizations" class="col-3 col-form-label">
                         Organizations</label>
                     <div class="col-9">
-                        <select multiple id="organizations" name="organizationPK"
-                                class="form-control" >
-                            <option th:each="organization : ${organizations}"
-                                    th:value="${organization.id}"
-                                    th:text="${organization.name}">
+                        <select multiple id="organizations" name="organizationPK" class="form-control">
+                            <option th:each="organization : ${organizations}" th:value="${organization.id}" th:text="${organization.name}">
                                 Organization Name</option>
                         </select>
+                        <div th:if="${#fields.hasErrors('hero.organizations')}" class="text-danger">
+                            <div th:each="err : ${#fields.errors('hero.organizations')}">
+                                <p th:text="${err}"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Hero</button>
