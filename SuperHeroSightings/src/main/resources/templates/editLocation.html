@@ -43,20 +43,20 @@
             <span class="h3">Edit Location</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="editLocation" method="PUT">
+            <form action="editLocation" method="POST">
                 <div class="form-group row">
                     <label for="name" class="col-3 col-form-label">
                         Name</label>
                     <div class="col-9">
                         <input type="text" name="name"
-                               id="name" class="form-control"/>
+                               id="name" class="form-control" th:value="${location.name}"/>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="description" class="col-3 col-form-label">
                         Description</label>
                     <div class="col-9">
-                        <textarea id="description" name="description" rows="4" cols="50">
+                        <textarea id="description" name="description" rows="4" cols="50" th:field="${location.description}">
                         </textarea>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                         Address</label>
                     <div class="col-9">
                         <input type="text" name="address"
-                               id="address" class="form-control"/>
+                               id="address" class="form-control" th:value="${location.address}"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -73,7 +73,7 @@
                         Longitude</label>
                     <div class="col-9">
                         <input type="text" name="longitude"
-                               id="longitude" class="form-control"/>
+                               id="longitude" class="form-control" th:value="${location.longitude}"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -81,9 +81,10 @@
                         Latitude</label>
                     <div class="col-9">
                         <input type="text" name="latitude"
-                               id="latitude" class="form-control"/>
+                               id="latitude" class="form-control" th:value="${location.latitude}"/>
                     </div>
                 </div>
+                <input type="hidden" name="id" th:value="${location.id}"/>
                 <button type="submit" class="btn btn-primary">Edit Location</button>
                 <button type="button" class="btn btn-primary">Cancel</button>
             </form>
