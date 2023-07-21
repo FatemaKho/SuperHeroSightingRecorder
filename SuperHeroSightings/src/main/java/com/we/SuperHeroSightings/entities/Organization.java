@@ -12,12 +12,18 @@ import javax.validation.constraints.Size;
  */
 public class Organization {
     
-    private int id; 
-    private String name;   
-    private String type;  
-    private String description;     
+    private int id;
+    @NotBlank(message = "Name must not be blank")
+    private String name;
+    @NotBlank(message = "Type must not be blank")
+    private String type;
+    @NotBlank(message = "Description must not be blank")
+    private String description;
+    @NotBlank(message = "Address must not be blank")
     private String address;
-    private String phone;   
+    @NotBlank(message = "Phone must not be blank")
+    private String phone;
+    @NotBlank(message = "Contact must not be blank")
     private String contact;    
     private List<Hero> members;
     
