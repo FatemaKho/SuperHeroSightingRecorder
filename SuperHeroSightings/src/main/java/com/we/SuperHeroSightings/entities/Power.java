@@ -12,7 +12,9 @@ import javax.validation.constraints.Size;
 public class Power {
     
     private int id;
+    @NotBlank(message = "Name must not be blank")
     private String name;
+    @NotBlank(message = "Description must not be blank")
     private String description;
 
     public int getId() {
