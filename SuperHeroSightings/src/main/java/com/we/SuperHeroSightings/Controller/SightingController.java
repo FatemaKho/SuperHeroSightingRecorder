@@ -32,6 +32,11 @@ public class SightingController {
         return "sightings";
     }
 
+    @GetMapping("addSighting")
+    public String addSighting(Model model) {
+        return "addSighting";
+    }
+
 
     @PostMapping("addSighting")
     public String addSighting(Sighting sighting, HttpServletRequest request) {

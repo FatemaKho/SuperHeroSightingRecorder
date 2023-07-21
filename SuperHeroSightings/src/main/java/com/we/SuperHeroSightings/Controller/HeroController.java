@@ -30,6 +30,11 @@ public class HeroController {
         return "heroes";
     }
 
+    @GetMapping("addHero")
+    public String addHero(Model model) {
+        return "addHero";
+    }
+
 
     @PostMapping("addHero")
     public String addSighting(Hero hero, HttpServletRequest request) {
@@ -72,7 +77,7 @@ public class HeroController {
         List<Organization> organizations = service.getAllOrganizations();
         model.addAttribute("hero", hero);
         model.addAttribute("powers", powers);
-        model.addAttribute("organizations", organizations);
+        model.addAttribute("organization", organizations);
 
         return "editHero";
     }
@@ -94,6 +99,7 @@ public class HeroController {
 
         return "redirect:/heroes";
     }
+
 
 
 }

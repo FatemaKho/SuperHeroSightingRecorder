@@ -31,6 +31,11 @@ public class OrganizationController {
         return "organizations";
     }
 
+    @GetMapping("addOrganization")
+    public String addOrganization(Model model) {
+        return "addOrganization";
+    }
+
     @PostMapping("addOrganization")
     public String addOrganization(Organization organization, HttpServletRequest request) {
         String[] memberIds = request.getParameterValues("memberId");

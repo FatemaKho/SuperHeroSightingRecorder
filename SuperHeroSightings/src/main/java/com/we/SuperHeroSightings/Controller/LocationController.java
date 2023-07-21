@@ -26,6 +26,10 @@ public class LocationController {
         model.addAttribute("locations", locations);
         return "locations";
     }
+    @GetMapping("addLocation")
+    public String addLocation(Model model) {
+        return "addLocation";
+    }
 
 
     @PostMapping("addLocation")
