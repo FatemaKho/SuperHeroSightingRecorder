@@ -5,10 +5,13 @@ import com.we.SuperHeroSightings.service.ServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,28 +33,52 @@ public class HeroController {
         return "heroes";
     }
 
-    @GetMapping("addHero")
+   /* @GetMapping("addHero")
     public String addHero(Model model) {
         List<Power> powers = service.getAllPowers();
         List<Organization> organizations = service.getAllOrganizations();
         model.addAttribute("powers", powers);
         model.addAttribute("organizations", organizations);
         return "addHero";
-    }
+    } */
+   @GetMapping("addHero")
+   public String addHero(Model model) {
+       List<Power> powers = service.getAllPowers();
+       List<Organization> organizations = service.getAllOrganizations();
+       model.addAttribute("powers", powers);
+       model.addAttribute("organizations", organizations);
+       // Add a new Hero object to the model for form-backing
+       model.addAttribute("hero", new Hero());
+       return "addHero";
+   }
 
 
     @PostMapping("addHero")
-    public String addHero(Hero hero, HttpServletRequest request) {
+    public String addHero(@Valid  Hero hero, BindingResult result,  HttpServletRequest request, Model model) {
         String powerId = request.getParameter("powerPK");
         String[] organizationIds = request.getParameterValues("organizationPK");
 
         hero.setPower(service.getPowerByID(Integer.parseInt(powerId)));
 
-        List<Organization> organizations = new ArrayList<>();
+
+        if (organizationIds == null){
+            FieldError error = new FieldError("hero", "organizations", "Hero must belong to atleast one organization");
+            result.addError(error);
+        } else{
+            List<Organization> organizations = new ArrayList<>();
         for(String organizationId : organizationIds) {
             organizations.add(service.getOrganizationByID(Integer.parseInt(organizationId)));
+
+        }  hero.setOrganizations(organizations);
         }
-        hero.setOrganizations(organizations);
+
+        if(result.hasErrors()) {
+            model.addAttribute("powers", service.getAllPowers());
+            model.addAttribute("organizations", service.getAllOrganizations());
+            return "addHero";
+        }
+
+
         service.addHero(hero);
 
         return "redirect:/heroes";
@@ -87,17 +114,30 @@ public class HeroController {
     }
 
     @PostMapping("editHero")
-    public String performEditHero(Hero hero, HttpServletRequest request) {
+    public String performEditHero(@Valid  Hero hero, BindingResult result,  HttpServletRequest request, Model model) {
         String powerId = request.getParameter("powerPK");
         String[] organizationIds = request.getParameterValues("organizationPK");
 
         hero.setPower(service.getPowerByID(Integer.parseInt(powerId)));
 
-        List<Organization> organizations = new ArrayList<>();
-        for(String organizationId : organizationIds) {
-            organizations.add(service.getOrganizationByID(Integer.parseInt(organizationId)));
+        if (organizationIds == null) {
+            FieldError error = new FieldError("hero", "organizations", "Hero must belong to atleast one organization");
+            result.addError(error);
+        } else {
+            List<Organization> organizations = new ArrayList<>();
+            for (String organizationId : organizationIds) {
+                organizations.add(service.getOrganizationByID(Integer.parseInt(organizationId)));
+
+            }
+            hero.setOrganizations(organizations);
         }
-        hero.setOrganizations(organizations);
+
+        if (result.hasErrors()) {
+            model.addAttribute("powers", service.getAllPowers());
+            model.addAttribute("organizations", service.getAllOrganizations());
+            return "addHero";
+        }
+
 
         service.updateHero(hero);
 

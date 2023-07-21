@@ -96,6 +96,11 @@
                                     th:text="${organization.name}">
                                 Organization Name</option>
                         </select>
+                        <div th:if="${#fields.hasErrors('hero.organizations')}" class="text-danger">
+                            <div th:each="err : ${#fields.errors('hero.organizations')}">
+                                <p th:text="${err}"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <input type="hidden" name="id" th:value="${hero.id}"/>
