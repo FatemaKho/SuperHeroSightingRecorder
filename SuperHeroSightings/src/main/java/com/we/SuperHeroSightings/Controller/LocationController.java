@@ -47,7 +47,7 @@ public class LocationController {
         return "redirect:/locations";
     }
 
-    @GetMapping("deleteLocation")
+    @PostMapping("deleteLocation")
     public String deleteLocation(Integer id) {
         service.deleteLocationByID(id);
 

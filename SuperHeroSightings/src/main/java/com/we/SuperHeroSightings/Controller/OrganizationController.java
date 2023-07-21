@@ -48,7 +48,7 @@ public class OrganizationController {
 
 
 
-    @GetMapping("deleteOrganization")
+    @PostMapping("deleteOrganization")
     public String deleteOrganization(Integer id) {
         service.deleteOrganizationByID(id);
 

@@ -47,7 +47,7 @@ public class SightingController {
         return "redirect:/sightings";
     }
 
-    @GetMapping("deleteSighting")
+    @PostMapping("deleteSighting")
     public String deleteSighting(Integer id) {
         service.deleteSightingByID(id);
 

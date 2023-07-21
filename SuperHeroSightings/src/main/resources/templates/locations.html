@@ -63,7 +63,15 @@
                     <td th:text="${location.Latitude}">Latitude</td>
                     <td><a href="#" th:href="@{/locationDetail(id=${location.id})}">Details</a></td>
                     <td><a href="#" th:href="@{/editLocation(id=${location.id})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteLocation(id=${location.id})}">Delete</a></td>
+                    <td>
+                        <!-- Form for delete action -->
+                        <form th:action="@{/deleteLocation(id=${location.id})}" method="post">
+                            <button type="submit" class="btn btn-link text-danger"
+                                    onclick="return confirm('Are you sure you want to delete this location?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

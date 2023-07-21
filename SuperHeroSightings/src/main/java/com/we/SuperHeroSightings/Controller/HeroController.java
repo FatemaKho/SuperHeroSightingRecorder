@@ -48,7 +48,7 @@ public class HeroController {
         return "redirect:/heroes";
     }
 
-    @GetMapping("deleteHero")
+    @PostMapping("deleteHero")
     public String deleteHero(Integer id) {
         service.deleteHeroByID(id);
 
