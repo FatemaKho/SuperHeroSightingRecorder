@@ -55,13 +55,13 @@
             <span th:text="${power.description}">display description</span>
         </div>
 
-        <!--
+        <!-- th:if checks if 'hero''s powerId matches the current powerId -->
         <div class="col-6 text-right"><strong>Heroes With This Power:</strong></div>
         <div class="col-6 text-left">
-                <span th:each="sighting : ${sightings}">
-                    <span th:text="${sighting.hero.name}">display heroes</span><br/>
+                <span th:each="hero : ${heroes}" th:if="${hero.power.id == power.id}">
+                    <span th:text="${hero.name}">display heroes</span><br/>
                 </span>
-        </div>-->
+        </div>
 
         <div class="col-12 text-center mt-3 mb-3">
             <button type="button" class="btn btn-primary" onclick="window.location.href='../templates/powers.html'">Back to Powers</button>

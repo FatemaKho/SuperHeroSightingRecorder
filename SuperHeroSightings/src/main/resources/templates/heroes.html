@@ -48,7 +48,7 @@
           <th>Type</th>
           <th>Description</th>
           <th>Power</th>
-          <th>Organizations</th>
+          <!--<th>Organizations</th>-->
           <th>Details</th>
           <th>Edit</th>
           <th>Delete</th>
@@ -60,8 +60,8 @@
           <td th:text="${hero.type}">Type</td>
           <td th:text="${hero.description}">Description</td>
           <td th:text="${hero.power.name}">Power</td>
-          <td> <span th:each="organization : ${hero.organizations}" th:text="${organization.name}">Organization Name</span>
-          </td>
+          <!--<td> <span th:each="organization : ${hero.organizations}" th:text="${organization.name}">Organization Name</span>
+          </td>-->
           <td><a href="#" th:href="@{/heroDetail(id=${hero.id})}">Details</a></td>
           <td><a href="#" th:href="@{/editHero(id=${hero.id})}">Edit</a></td>
           <td><a href="#" th:href="@{/deleteHero(id=${hero.id})}">Delete</a></td>
