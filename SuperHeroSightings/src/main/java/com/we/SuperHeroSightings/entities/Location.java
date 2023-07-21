@@ -13,7 +13,9 @@ import javax.validation.constraints.Size;
 public class Location {
     
     private int id;
-    private String name; 
+    @NotBlank(message = "please enter name")
+    private String name;
+    @NotBlank(message = "description must not be blank")
     private String description;
     private String address; 
     private String longitude;

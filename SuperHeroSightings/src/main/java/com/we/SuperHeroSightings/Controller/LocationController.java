@@ -7,10 +7,13 @@ import com.we.SuperHeroSightings.service.ServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,30 +29,39 @@ public class LocationController {
         model.addAttribute("locations", locations);
         return "locations";
     }
+
     @GetMapping("addLocation")
     public String addLocation(Model model) {
+        model.addAttribute("location", new Location()); // Add a new Location object to the model for form-backing
         return "addLocation";
     }
 
-
     @PostMapping("addLocation")
-    public String addLocation(HttpServletRequest request) {
+    public String addLocation(@ModelAttribute("location") @Valid Location location, BindingResult result, HttpServletRequest request) {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         String address = request.getParameter("address");
         String longitude = request.getParameter("longitude");
         String latitude = request.getParameter("latitude");
 
-        Location location = new Location();
+        // Set the form parameters to the Location object
         location.setName(name);
         location.setDescription(description);
         location.setAddress(address);
         location.setLongitude(longitude);
         location.setLatitude(latitude);
-        service.addLocation(location);
+
+        if (result.hasErrors()) {
+            // If there are validation errors, return to the form page to display them
+            return "addLocation"; // Return to the form page to display errors
+        }
+
+        // If there are no validation errors, continue with the logic to save the location
+        // service.addLocation(location);
 
         return "redirect:/locations";
     }
+
 
     @PostMapping("deleteLocation")
     public String deleteLocation(Integer id) {
